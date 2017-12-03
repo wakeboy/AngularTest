@@ -1,0 +1,9 @@
+<p>
+  Please input the number of time in seconds between emmitting numbers and there frequency
+</p>
+<form>
+  <label>Time:
+    <input type="text" [(ngModel)]="timer" class="form-control" placeholder="Time in seconds" name="timer" required />
+  </label>
+  <button class="btn" (click)="onStartTimer()">Start</button>
+</form>

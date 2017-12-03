@@ -1,0 +1,28 @@
+<div style="text-align:center">
+  <h1>{{ title }}</h1>
+</div>
+<div>
+  <p>
+    Please input the number of time in seconds between emmitting numbers and there frequency
+  </p>
+  <form>
+    <label>Time:
+      <input type="text" [(ngModel)]="intervalInput" class="form-control" placeholder="Time in seconds" name="interval" required />
+    </label>
+    <button class="btn" (click)="onStartTimer()">Start</button>
+  </form>  
+</div> 
+<div>
+  <form>
+    <label>Number:
+      <input type="text" [(ngModel)]="numberInput" class="form-control" placeholder="Number Input" name="numberInput" required />
+    </label>
+    <button class="btn" (click)="onNumberInput()">Start</button>
+  </form>
+</div>
+
+<div>
+  <span *ngFor="let entry of renderMap?.entries()">{{ entry[0] }}:{{ entry[1] }} | </span>
+</div>
+
+<div *ngIf="isFib">FIB</div>
