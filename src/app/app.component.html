@@ -1,13 +1,14 @@
 <div style="text-align:center">
-  <h1>{{ title }}</h1>
+  <h1>Developer Coding Test</h1>
 </div>
 <div>
   <p>
     Please input the number of time in seconds between emmitting numbers and there frequency
   </p>
-  <form>
+  {{ state === ApplicationState.Stopped }}
+  <form *ngIf="state === ApplicationState.Stopped">
     <label>Time:
-      <input type="text" [(ngModel)]="intervalInput" class="form-control" placeholder="Time in seconds" name="interval" required />
+      <input type="text" [(ngModel)]="inputTimerTimeout" class="form-control" placeholder="Time in seconds" name="interval" required />
     </label>
     <button class="btn" (click)="onStartTimer()">Start</button>
   </form>  
@@ -22,7 +23,7 @@
 </div>
 
 <div>
-  <span *ngFor="let entry of renderMap?.entries()">{{ entry[0] }}:{{ entry[1] }} | </span>
+  <span *ngFor="let input of inputCount">{{ input.input }} : {{ input.count }}, </span>
 </div>
 
 <div *ngIf="isFib">FIB</div>

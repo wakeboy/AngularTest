@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs/Rx';
-// import { Observable } from 'rxjs/Observable';
-import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-
 import { FibonacciChecker } from './classes/fibonacci-checker';
+import { InputCount } from './interfaces/input-count'; 
+import { InputTimer } from './classes/input-timer';
+import { ApplicationState } from './enums/application-state';
 
 @Component({
   selector: 'app-root',
@@ -12,39 +11,45 @@ import { FibonacciChecker } from './classes/fibonacci-checker';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: string = 'Developer Coding Test';
 
   fibonacciChecker: FibonacciChecker = new FibonacciChecker();
 
   numberInput: number;
   isFib: boolean = false;
 
-  map = new Map<number, number>();
-  renderMap: Map<number, number>;
+  map: Map<number, number> = new Map<number, number>();
+  inputCount: InputCount[] = [];
 
-  interval: Observable<number>;
-  intervalInput: number;
+  inputTimer: InputTimer;
+  inputTimerTimeout: number;
+
+  state: ApplicationState;
+  public ApplicationState = ApplicationState;
 
   constructor() {
-   }
+    this.state = ApplicationState.Stopped;
+  }
 
   /**
    * Input functions 
    */
   onNumberInput() : void {
-      this.checkFibonacci();
+    this.checkFibonacci();
+    this.addInputToMap();
+  }
 
-      var currentCount = this.map.get(this.numberInput);
-      if(currentCount) {
-        this.map.set(this.numberInput, ++currentCount);
-      }
-      else {
-        this.map.set(this.numberInput, 1);
-      }
+  private addInputToMap() : void {
+    var currentCount = this.map.get(this.numberInput);
+    if(currentCount) {
+      this.map.set(this.numberInput, ++currentCount);
+    }
+    else {
+      this.map.set(this.numberInput, 1);
+    }
   }
 
   private checkFibonacci() : void {
-    if (this.numberInput < 1000 && this.fibonacciChecker.isFibonacci(this.numberInput)) {
+    if (this.fibonacciChecker.isFibonacci(this.numberInput)) {
       this.isFib = true;
     }
     else {
@@ -52,22 +57,57 @@ export class AppComponent {
     }
   }
 
+  printMap() : void {
+    this.inputCount = [];
+
+    this.map.forEach((item, entryKey, mapObj) => {
+      this.inputCount.push({ input: entryKey, count: item });
+    });
+
+    this.inputCount = this.inputCount.sort((a, b) => {
+      return b.count - a.count;
+    });
+  }
+
   /**
    * Timer control function
    */
   onStartTimer() : void {
-    console.log(this.intervalInput);
-    this.interval = Observable.interval(this.intervalInput * 1000);
-
-    //this.interval = IntervalObservable.create(this.intervalInput * 1000);
-
-    this.interval.subscribe( (interval) => {
-      this.renderMap = this.map;
-    });
+    this.inputTimer = new InputTimer(this.inputTimerTimeout, this.printMap.bind(this));
+    this.inputTimer.start();
+    this.ApplicationState.Started;
   }
 
   onHalt(): void {
+    this.inputTimer.halt();
+    this.ApplicationState.Paused;
   }
 
+  onResume() : void {
+    this.inputTimer.resume();
+    this.ApplicationState.Started;
+  }
 
+  onQuit() : void {
+    this.inputTimer = null;
+    this.state = ApplicationState.Stopped;
+  }
+
+  // private setApplicationState(input: any) {
+  //   if (input.toLowerCase() === 'halt') {
+  //     this.state = ApplicationState.Paused;
+  //   }
+
+  //   else if (input.toLowerCase() === 'resume') {
+  //     this.state = ApplicationState.Started;
+  //   }
+
+  //   else if (input.toLowerCase() === 'quit') {
+  //     this.state = ApplicationState.Stopped;
+  //   }
+
+  //   else if (this.state === ApplicationState.Stopped && !isNaN(input)) {
+  //     this.state = ApplicationState.Started;
+  //   }
+  // }
 }
