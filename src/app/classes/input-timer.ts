@@ -1,4 +1,3 @@
-
 import { Observable, Subscription } from 'rxjs/Rx';
 
 export class InputTimer {
@@ -42,6 +41,5 @@ export class InputTimer {
   resume(): void {
     this.start();
   }
-
 }
 

@@ -1,23 +1,20 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
 
-import { TimeoutComponent } from './timeout.component';
+import { PlayControlComponent } from './play-control.component';
 
-describe('TimeoutComponent', () => {
-  let component: TimeoutComponent;
-  let fixture: ComponentFixture<TimeoutComponent>;
+describe('PlayControlComponent', () => {
+  let component: PlayControlComponent;
+  let fixture: ComponentFixture<PlayControlComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule ],
-      declarations: [ TimeoutComponent ]
+      declarations: [ PlayControlComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TimeoutComponent);
+    fixture = TestBed.createComponent(PlayControlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

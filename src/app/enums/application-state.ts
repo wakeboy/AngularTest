@@ -1,5 +1,6 @@
 export enum ApplicationState {
     Stopped,
     Started,
-    Paused
+    Paused,
+    Finished
 }

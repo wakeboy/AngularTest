@@ -1,25 +1,19 @@
 <div style="text-align:center">
   <h1>Developer Coding Test</h1>
 </div>
-<div>
-  <p>
-    Please input the number of time in seconds between emmitting numbers and there frequency
-  </p>
-  {{ state === ApplicationState.Stopped }}
-  <form *ngIf="state === ApplicationState.Stopped">
-    <label>Time:
-      <input type="text" [(ngModel)]="inputTimerTimeout" class="form-control" placeholder="Time in seconds" name="interval" required />
-    </label>
-    <button class="btn" (click)="onStartTimer()">Start</button>
-  </form>  
+
+<div class="controls" *ngIf="this.state === ApplicationState.Stopped || this.state === ApplicationState.Finished">
+  <app-start-control (startTimer)="start($event)"></app-start-control>
+</div>
+
+<div class="controls" *ngIf="state === ApplicationState.Started || state === ApplicationState.Paused">
+  <app-play-control [halt]="halt.bind(this)" 
+                    [resume]="resume.bind(this)" 
+                    [quit]="quit.bind(this)"></app-play-control> 
 </div> 
-<div>
-  <form>
-    <label>Number:
-      <input type="text" [(ngModel)]="numberInput" class="form-control" placeholder="Number Input" name="numberInput" required />
-    </label>
-    <button class="btn" (click)="onNumberInput()">Start</button>
-  </form>
+
+<div *ngIf="state === ApplicationState.Started || state === ApplicationState.Paused">
+  <app-input-control (inputNumber)="inputNumber($event)"></app-input-control>
 </div>
 
 <div>
@@ -27,3 +21,5 @@
 </div>
 
 <div *ngIf="isFib">FIB</div>
+
+<div *ngIf="state === ApplicationState.Finished">Thanks for playing, enter a new time to play again.</div>
