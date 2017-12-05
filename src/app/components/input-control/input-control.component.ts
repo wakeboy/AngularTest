@@ -10,6 +10,7 @@ export class InputControlComponent implements OnInit {
   @Output() inputNumber = new EventEmitter();
   
   value: number;
+  hasError: boolean = false;
 
   constructor() { }
 
@@ -17,7 +18,20 @@ export class InputControlComponent implements OnInit {
   }
 
   onAddNumber() {
-    this.inputNumber.emit(this.value);
+    if (this.inputIsValid()) {
+      this.inputNumber.emit(this.value);
+    }
+  }
+
+  inputIsValid() {
+    if (!this.value) {
+      this.hasError = true;
+    }
+    else {
+      var reg = new RegExp('^[0-9]+$');
+      this.hasError = !reg.test(this.value.toString());
+    }
+    return !this.hasError;
   }
 
 }
