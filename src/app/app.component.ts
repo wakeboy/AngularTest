@@ -25,9 +25,6 @@ export class AppComponent implements OnInit {
   // The array which is displayed and updated on the display interval
   inputCount: InputCount[];
 
-  // The last number which was input to include in teh input count
-  numberInput: number;
-
   // The interval timer executes a callback on a schedule 
   inputTimer: InputTimer;
 

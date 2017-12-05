@@ -10,14 +10,28 @@ export class StartControlComponent implements OnInit {
   @Output() startTimer = new EventEmitter();
   
   inputTimerTimeout: number;
+  hasError: boolean = false;
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {
   }
 
   onStartTimer() {
-    this.startTimer.emit(this.inputTimerTimeout);
+    if (this.inputIsValid()) {
+      this.startTimer.emit(this.inputTimerTimeout);
+    }
   }
 
+  inputIsValid() {
+    if (!this.inputTimerTimeout) {
+      this.hasError = true;
+    }
+    else {
+      var reg = new RegExp('^[0-9]+$');
+      this.hasError = !reg.test(this.inputTimerTimeout.toString());
+    }
+    return !this.hasError;
+  }
 }

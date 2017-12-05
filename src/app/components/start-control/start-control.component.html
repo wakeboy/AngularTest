@@ -5,5 +5,7 @@
   <label>Time:
     <input type="text" [(ngModel)]="inputTimerTimeout" class="form-control" placeholder="Time in seconds" name="interval" required />
   </label>
-  <button class="btn" (click)="onStartTimer()">Start</button>
+  <button type="submit" class="btn" (click)="onStartTimer()">Start</button>
+
+  <div class="alert-danger" *ngIf="hasError">Please enter a number to start</div>
 </form> 
