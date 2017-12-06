@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { StartControlComponent } from './components/start-control/start-control.component';
 import { PlayControlComponent } from './components/play-control/play-control.component';
+import { InputControlComponent } from './components/input-control/input-control.component';
 import { ApplicationState } from './enums/application-state';
 import { FibonacciChecker } from './classes/fibonacci-checker';
 
@@ -16,7 +17,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         StartControlComponent,
-        PlayControlComponent
+        PlayControlComponent,
+        InputControlComponent
       ],
     }).compileComponents();
   }));
